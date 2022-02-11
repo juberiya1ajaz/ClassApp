@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Contact Us
+{% endblock %}
+
+{% block main %}
+<div class="contact">
+   <form action="{{ url_for('contact') }}" method="post">
+      <div class="pt-4">
+         <div class="pt-3 ">
+            <label>UserName:</label>
+            {% if session.user_id %}
+            <input type="text" value="{{session.username}}" class="form-control" placeholder="Enter Username"
+               name=username>
+            {% else %}
+            <input type="text" class="form-control" placeholder="Enter Username" name=username>
+            {% endif %}
+         </div>
+
+         <div class="pt-3">
+            <label>First Name:</label>
+            <input type="text" class="form-control" placeholder="Enter First name" name="f_name">
+         </div>
+         <div class="pt-3">
+            <label>Last Name:</label>
+            <input type="text" class="form-control" placeholder="Enter Last name" name="l_name">
+         </div>
+      </div>
+      <div class="pt-4">
+         <p class='pt-3 '>Are you a an existing user?</p>
+         <select name="user" class="form-control">
+            <option disabled selected value>Select Your Answer</option>
+            <option value='yes'>Yes</option>
+            <option value='no'>No</option>
+         </select>
+      </div>
+      <div>
+         <p class='pt-3 '>Which option best describes your current role?</p>
+         <select name="role" class="form-control">
+            <option disabled selected value>Select current role</option>
+            <option value='Student'>Student</option>
+            <option value='1'>employed</option>
+            <option value='2'>Student</option>
+            <option value='3'>Unemployedr</option>
+         </select>
+      </div>
+
+
+      <p class="pt-3">Would you recommend this Planner to a friend or family?</p>
+      <div style="margin-left: 18px !important; margin-top: 0% !important;">
+         <input type='radio' name='answer' value='Definetely' checked />Definetely</br>
+         <input type='radio' name='answer' value='Maybe' />Maybe </br>
+         <input type='radio' name='answer' value='Not sure' />Not sure </br>
+
+         <p class="pt-3">Any comments or suggestions to US?</p>
+         <textarea name="text" type='text' style="margin-left: 8px !important; margin-bottom: 2px !important;"
+            placeholder='Enter your comment here...'></textarea>
+      </div>
+      <div class="center">
+         <button class="btn btn-lg btn-light" type="submit">SUBMIT</button>
+      </div>
+   </form>
+</div>
+
+{% endblock %}
