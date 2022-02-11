@@ -1,1 +1,154 @@
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+}
 
+main .form-control
+{
+    /* Center form controls */
+    display: inline-block;
+
+    /* Override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+.form-control:focus 
+{
+    border-color: rgb(54,57,59);
+    box-shadow: 0 0 0 0.2rem rgba(54, 57, 59, 0.7);
+}
+
+main
+{
+    /* Scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* Center contents */
+    text-align: center;
+}
+
+#box
+{
+  border-radius: 0.3rem;
+  border: 1px solid rgb(117, 117, 117 ,0.5);
+  width: 300px;
+  height: 500px;
+  margin: auto;
+  padding: 20px;
+  background-color:white ;
+}
+
+body 
+{
+    width:100%;
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+}
+#div_index{
+    margin-top: 40px !important;
+    height: 200px;
+    text-align: center !important;
+    margin: auto;
+    font-size: 40px;
+    font-weight:lighter;
+  }
+  
+  input[type="text"]:hover, input[type="number"]:hover , input[type="month"]:hover
+  {
+    background-color:#f2f2f2 ;
+    transition: color 2s ease-in-out, background-color 0.15s ease-in-out;
+  }
+
+  #a1:hover, #home:hover
+{
+    border-bottom: 2px solid white;
+}
+  h1
+  {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+  }
+.jumbotron
+{
+   color: white;
+   background-color:#5d6daa;
+   font-size: 30px;
+   margin: 5px;
+   padding: 40px;
+   font-family:Arial, Helvetica, sans-serif;
+   text-align: left !important;
+}
+.w3-animate-left
+{
+   animation-duration: 4s !important;
+}
+.w3-animate-fading
+{
+   animation-duration: 6s !important;
+   animation-iteration-count: 3 !important;
+
+}
+select
+{
+    margin-left: 18px !important; 
+}
+.center_button
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    margin-bottom: 25px;
+    margin-top: 0px !important;
+}
+.form_contact
+{
+    padding-top: 4px;
+    text-align:left !important;
+    border-radius: 0.3rem;
+    width: 700px;
+    height: 100%;  
+    padding: 40px;
+    color: white;
+    background-color:rgb(93, 109, 170,0.85)  ;
+    border: 1px solid rgb(93, 109, 170,0.9) ;
+    margin: auto;
+}
+
+#home
+{
+   color:white ;
+   font-weight: bold;
+   letter-spacing: 3px;
+}
+#home:hover
+{
+   font-size: large;
+}
+.btn1 ,.btn {
+    font-size:20px !important;
+  }
+.btn1{background-color: #25c3f3 !important;
+    border: 1px solid #25c3f3;} 
+  
+.btn2 ,.btn1, .btn
+{
+   color:black;
+   padding: 3px 25px;
+   border-radius: 8px;
+   
+}
+.btn{
+    border: 1px solid #25c3f3 ;
+}
+.btn2 , .btn{
+    background-color: white;
+
+}
+.btn2:hover 
+{
+   color:white;
+   background-color: #25c3f3
+}

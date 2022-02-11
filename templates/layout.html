@@ -25,15 +25,15 @@
 
 <body>
 
-    <nav class="navbar  navbar-expand-sm  navbar-light" style="background-color: #e3f2fd;">
+    <nav class="navbar  navbar-expand-sm  navbar-dark" style="background-color: #5d6daa;">
         <div class="container-fluid">
             {% if session.user_id %}
-            <a class="nav-link active" id="planner" href="/"> Profile</a>
+            <a class="nav-link active" id="home" href="/"> Profile</a>
             <button class="navbar-toggler">
             </button>
 
             {% else %}
-            <a class="nav-link active" id="planner" href="/"> Planner</a>
+            <a class="nav-link active" id="home" href="/"> HOME</a>
             <button class="navbar-toggler">
             </button>
             {% endif %}
@@ -65,7 +65,7 @@
                     <li class="nav-item"><a class="nav-link" id="a1" href="/login">Log
                             In</button></a></li>
                     
-                    <li class="nav-item"><a class="nav-link" href="/register"><button type="button" class="b">Get
+                    <li class="nav-item"><a class="nav-link" href="/register"><button type="button" class="btn2">Get
                                 Started</button></a></li>
                 </ul>
                 <hr>
