@@ -1,6 +1,5 @@
 
 from flask import Flask, request ,redirect,url_for, render_template, request, session, flash
-from flask_sqlalchemy import SQLAlchemy
 from cs50 import SQL
 from flask_session import Session
 from tempfile import mkdtemp
@@ -8,8 +7,9 @@ from sqlalchemy.sql.expression import select
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 from helpers import login_required,apology
-
- 
+from twilio.twiml.messaging_response import MessagingResponse
+from flask_sqlalchemy import SQLAlchemy
+  
 
 app = Flask(__name__)
 
@@ -33,6 +33,18 @@ db = SQL("sqlite:///users.db")
 def index():
 
         return render_template("index.html")
+
+@app.route("/sms", methods=['POST'])
+def sms_reply():
+    """Respond to incoming calls with a simple text message."""
+    # Fetch the message
+    msg = request.form.get('Body')
+
+    # Create reply
+    resp = MessagingResponse()
+    resp.message("You said: {}".format(msg))
+
+    return str(resp)
       
 
 @app.route("/contact", methods=["GET", "POST"])
