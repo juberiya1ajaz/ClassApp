@@ -9,7 +9,19 @@ from datetime import datetime
 from helpers import login_required,apology
 from twilio.twiml.messaging_response import MessagingResponse
 from flask_sqlalchemy import SQLAlchemy
-  
+from twilio.twiml.messaging_response import MessagingResponse
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+from flask import Flask, render_template, url_for, flash, redirect, request
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from os import path
+from flask_login import LoginManager
+from flask_login import UserMixin
+from flask_login import login_required, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, login_required, logout_user 
+
 
 app = Flask(__name__)
 
@@ -22,6 +34,21 @@ def after_request(response):
     return response
 
 
+# create db for tasks  
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
+dbt = SQLAlchemy(app)
+
+# db model 
+class Tasks(dbt.Model):
+    id = dbt.Column(dbt.Integer, primary_key=True)
+    title = dbt.Column(dbt.String(100), nullable=False)
+    content = dbt.Column(dbt.Text, nullable=False)
+    date_created = dbt.Column(dbt.DateTime, nullable=False, default=datetime.utcnow)
+
+    def __repr__(self):
+            return f"Post('{self.title}', '{self.content}')"
+dbt.create_all(app=app)
+
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
@@ -31,8 +58,7 @@ db = SQL("sqlite:///users.db")
 
 @app.route('/')
 def index():
-
-        return render_template("index.html")
+    return render_template("index.html")
 
 @app.route("/sms", methods=['POST'])
 def sms_reply():
@@ -42,9 +68,32 @@ def sms_reply():
 
     # Create reply
     resp = MessagingResponse()
-    resp.message("You said: {}".format(msg))
+    tasks_lst = list()
+    tasks_content = dbt.session.query(Tasks.content).all()
+    tasks_title = dbt.session.query(Tasks.title).all()
+
+
+    for i,  in tasks_content: 
+            tasks_lst.append(i)
+    resp.message(f'Hello, Your tasks are \n { tasks_lst}')
 
     return str(resp)
+
+
+# add tasks 
+ 
+@app.route("/tasks", methods=['POST', 'GET'])
+def add_tasks():
+    if request.method == 'POST':
+        name = request.form.get("name")
+        body = request.form.get("desc")
+
+        new_task = Tasks(title=name, content=body)
+        dbt.session.add(new_task)
+        dbt.session.commit()
+        return 'Add tasks'
+    else:
+        return render_template('tasks.html',)
       
 
 @app.route("/contact", methods=["GET", "POST"])
@@ -75,6 +124,10 @@ def contact():
     else:
         return render_template("contact.html")
 
+
+
+
+# authentication
 @app.route("/login", methods=["GET", "POST"])
 def login():
     
@@ -114,10 +167,10 @@ def logout():
 
     # Forget any user_id
     session.clear()
-
-    # Redirect user to login form
     return redirect("/")      
 
+
+# register 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
