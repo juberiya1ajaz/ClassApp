@@ -1,4 +1,5 @@
 
+
 from flask import Flask, request ,redirect,url_for, render_template, request, session, flash
 from cs50 import SQL
 from flask_session import Session
@@ -8,12 +9,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 from helpers import login_required,apology
 from twilio.twiml.messaging_response import MessagingResponse
-from flask_sqlalchemy import SQLAlchemy
-from twilio.twiml.messaging_response import MessagingResponse
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-from flask import Flask, render_template, url_for, flash, redirect, request
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
@@ -60,6 +55,8 @@ db = SQL("sqlite:///users.db")
 def index():
     return render_template("index.html")
 
+
+
 @app.route("/sms", methods=['POST'])
 def sms_reply():
     """Respond to incoming calls with a simple text message."""
@@ -91,37 +88,13 @@ def add_tasks():
         new_task = Tasks(title=name, content=body)
         dbt.session.add(new_task)
         dbt.session.commit()
-        return 'Add tasks'
+        return render_template('msg.html')
     else:
         return render_template('tasks.html',)
       
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
-    if request.method == "POST":
-        first_name= request.form.get("f_name")
-        last_name= request.form.get("l_name")
-        user = request.form.get("user")
-        role = request.form.get("role")
-        message = request.form['text']
-
-        # Ensure username was submitted
-        if not first_name or not last_name :
-            return apology("Please provide your name", 403)
-
-        # Ensure necessary data was submitted
-        elif not user:
-            return apology("please provide data", 403)
-        elif not role:
-            return apology("please provide current role", 403)
-        elif not message:
-            return apology("please provide some comments", 403)
-
-
-        # Redirect user to home page
-        return redirect("/")
-
-    else:
         return render_template("contact.html")
 
 
@@ -213,6 +186,8 @@ def register():
         return redirect("/")
     else:
         return render_template("register.html")
+
+
 
 @app.route("/delete" , methods=["GET", "POST"])
 @login_required
