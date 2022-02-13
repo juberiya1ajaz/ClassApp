@@ -57,6 +57,7 @@ def index():
 
 
 
+
 @app.route("/sms", methods=['POST'])
 def sms_reply():
     """Respond to incoming calls with a simple text message."""
@@ -72,9 +73,24 @@ def sms_reply():
 
     for i,  in tasks_content: 
             tasks_lst.append(i)
-    resp.message(f'Hello, Your tasks are \n { tasks_lst}')
+
+    if '--Tasks'.lower() in msg:
+        resp.message(f'Hello, Your tasks are \n { tasks_lst}')
+    elif '--Task completed'.lower() in msg:
+        resp.message(f'Task marked as completed!')
+    elif '--Contact teacher'.lower() in msg:
+        resp.message(f"Your Teacher's contact no. is +1 1111111111 ")
+    elif '--help'.lower() in msg:
+        resp.message(f"COMMAND: \n --Tasks: To show all remaining tasks \n --Task completed: To mark a task as completed \n --Contact teacher: To contact your teacher \n --Help: Shows a list of commands")
+
+
+    else: 
+        resp.message(f"I'm sorry, but I can't help with that. Type --help to show a list of all commands")
+
+
 
     return str(resp)
+
 
 
 # add tasks 
