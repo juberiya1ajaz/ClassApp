@@ -2,48 +2,65 @@
 
 <html lang="en">
 
-<head>
+    <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap" rel="stylesheet">
 
-    <!-- http://getbootstrap.com/docs/4.5/ -->
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="static\styles.css" rel="stylesheet">
-    <script type="text/javascript" src="{{url_for('static', filename='script.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-        crossorigin="anonymous"></script>
-    <title>Planner: {% block title %}{% endblock %}</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>{% block title %}{% endblock title %} | EasyTasks</title>
+
 
 </head>
 
 <body>
 
-    <nav class="navbar  navbar-expand-sm  navbar-dark" style="background-color: #5d6daa;">
+    <nav class="navbar navbar-expand-lg navbar-dark"  style="background-color: #1DB9C3;">
         <div class="container-fluid">
+          <a class="navbar-brand" href="/" style="font-family:  Blueberry">EasyTasks</a>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
             {% if session.user_id %}
-            <a class="nav-link active" id="home" href="/"> Profile</a>
+            
+
+            <a class="nav-link active" id="logout" href="/">Home</a>
+            <button class="navbar-toggler">
+            </button>
+
+            <a class="nav-link active" id="logout" href="/logout">Logout</a>
+            <button class="navbar-toggler">
+            </button>
+
+            <a class="nav-link active" id="tasks" href="/tasks">Add Tasks</a>
             <button class="navbar-toggler">
             </button>
 
             {% else %}
-            <a class="nav-link active" id="home" href="/"> HOME</a>
+
+            <a class="nav-link active" id="home" href="/"> Home</a>
             <button class="navbar-toggler">
             </button>
             {% endif %}
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav me-auto mb-2 mb-lg-0">
-
               </div>
 
                 </ul>
                 {% if session.user_id %}
+
                 <ul class="navbar-nav mr-auto mt-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="a1" data-bs-toggle="dropdown" aria-current="page"
@@ -55,18 +72,25 @@
                             <a class="dropdown-item" href="/delete">Delete Account</a>
                         </div>
                     </li>
-                    <li class="nav-item"><a class="nav-link" id="a1" href="/tasks">Add Your Task</a></li>
+                    <li class="nav-item"><a class="nav-link" id="a1" href="/contact">Contact </a></li>
                    
                 </ul>
+
                 {% else %}
                 <ul class="navbar-nav ml-auto mt-2">
-                    <li class="nav-item"><a class="nav-link" id="a1" href="/contact">Contact
-                            Us</a></li>
-                    <li class="nav-item"><a class="nav-link" id="a1" href="/login">Log
-                            In</button></a></li>
+                    <a class="nav-link active" id="logout" href="/contact">Contact</a>
+                    <button class="navbar-toggler">
+                    </button>
+
+                    <a class="nav-link active" id="logout" href="/login">Login</a>
+                    <button class="navbar-toggler">
+                    </button>
                     
-                    <li class="nav-item"><a class="nav-link" href="/register"><button type="button" class="btn2">Get
-                                Started</button></a></li>
+                    
+                    <a class="nav-link active" id="logout" href="/register">Get Started</a>
+                    <button class="navbar-toggler">
+                    </button>
+
                 </ul>
                 <hr>
 
@@ -75,15 +99,34 @@
         </div>
     </nav>
 
-    <main class="container p-5">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <!-- <strong>Title</strong> --> {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+
+
+    <main>
         {% block main %}{% endblock %}
     </main>
-    <footer class="container">
-        <hr>
-        <p class="float-end"><a href="#" class="a1"> Back to top</a></p>
-        <p>© 2022-2023 Company, Inc. · <a href="#" class="a1">Privacy · Terms</p>
-    </footer>
 
+    
+<!-- Footer -->
+<footer class="bg-light text-center text-lg-start">
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: #1DB9C3 ;">
+      © 2021 Copyright:
+      <a class="text-dark">Made By a group of hackers</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
 </body>
 
 </html>
