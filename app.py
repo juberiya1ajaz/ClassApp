@@ -1,4 +1,5 @@
 
+
 from flask import Flask, request ,redirect,url_for, render_template, request, session, flash
 from cs50 import SQL
 from flask_session import Session
@@ -8,12 +9,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 from helpers import login_required,apology
 from twilio.twiml.messaging_response import MessagingResponse
-from flask_sqlalchemy import SQLAlchemy
-from twilio.twiml.messaging_response import MessagingResponse
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-from flask import Flask, render_template, url_for, flash, redirect, request
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
@@ -60,6 +55,9 @@ db = SQL("sqlite:///users.db")
 def index():
     return render_template("index.html")
 
+
+
+
 @app.route("/sms", methods=['POST'])
 def sms_reply():
     """Respond to incoming calls with a simple text message."""
@@ -75,9 +73,24 @@ def sms_reply():
 
     for i,  in tasks_content: 
             tasks_lst.append(i)
-    resp.message(f'Hello, Your tasks are \n { tasks_lst}')
+
+    if '--Tasks'.lower() in msg:
+        resp.message(f'Hello, Your tasks are \n { tasks_lst}')
+    elif '--Task completed'.lower() in msg:
+        resp.message(f'Task marked as completed!')
+    elif '--Contact teacher'.lower() in msg:
+        resp.message(f"Your Teacher's contact no. is +1 1111111111 ")
+    elif '--help'.lower() in msg:
+        resp.message(f"COMMAND: \n --Tasks: To show all remaining tasks \n --Task completed: To mark a task as completed \n --Contact teacher: To contact your teacher \n --Help: Shows a list of commands")
+
+
+    else: 
+        resp.message(f"I'm sorry, but I can't help with that. Type --help to show a list of all commands")
+
+
 
     return str(resp)
+
 
 
 # add tasks 
@@ -91,37 +104,13 @@ def add_tasks():
         new_task = Tasks(title=name, content=body)
         dbt.session.add(new_task)
         dbt.session.commit()
-        return 'Add tasks'
+        return render_template('msg.html')
     else:
         return render_template('tasks.html',)
       
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
-    if request.method == "POST":
-        first_name= request.form.get("f_name")
-        last_name= request.form.get("l_name")
-        user = request.form.get("user")
-        role = request.form.get("role")
-        message = request.form['text']
-
-        # Ensure username was submitted
-        if not first_name or not last_name :
-            return apology("Please provide your name", 403)
-
-        # Ensure necessary data was submitted
-        elif not user:
-            return apology("please provide data", 403)
-        elif not role:
-            return apology("please provide current role", 403)
-        elif not message:
-            return apology("please provide some comments", 403)
-
-
-        # Redirect user to home page
-        return redirect("/")
-
-    else:
         return render_template("contact.html")
 
 
@@ -213,6 +202,8 @@ def register():
         return redirect("/")
     else:
         return render_template("register.html")
+
+
 
 @app.route("/delete" , methods=["GET", "POST"])
 @login_required
