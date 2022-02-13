@@ -5,21 +5,51 @@ Log In
 {% endblock %}
 
 {% block main %}
-<div id="box">
+
+<br>
+
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-8 col-lg-7 col-xl-6">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid" alt="Phone image">
+        </div>
+        <div class="col-md-5 col-lg-5 col-xl-5 offset-xl-1" id="box">
+
+          <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
+
     <form action="{{ url_for('login') }}" method="POST">
         <fieldset>
             <div class="form-group, mt-4 mb-3">
-                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username"
-                    type="text" />
+              <label class="form-label" for="Username">Username</label>
+                <input autocomplete="off" autofocus class="form-control" name="username"type="text" />
             </div>
+
+            <br>
             <div class="form-group, mb-3">
-                <input class="form-control" name="password" placeholder="Password" type="password" />
+              <label class="form-label" for="password">Password</label>
+                <input class="form-control" name="password" type="password" />
             </div>
+
+            <br> 
+
+            <div class="form-group, mb-3">
+              <label class="form-label" for="email">Email</label>
+                <input class="form-control" name="email" placeholder="email" type="email" />
+            </div>
+
+            <br>
+
             <button class="btn btn-dark" style="margin-bottom:350px " type="submit">Log In</button>
             
         </fieldset>
     </form>
-</div>
+
+              
+        </div>
+      </div>
+    </div>
+  </section>
 
 
 {% endblock %}
